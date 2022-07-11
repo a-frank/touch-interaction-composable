@@ -29,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 class MainActivity : ComponentActivity() {
@@ -60,14 +61,14 @@ class MainActivity : ComponentActivity() {
 						}
 					}
 				}
-				ScribbleCanvas(color = selectedColor, modifier = Modifier.fillMaxSize())
+				ScribbleCanvas(color = selectedColor, lineWidth = 2.dp, modifier = Modifier.fillMaxSize())
 			}
 		}
 	}
 }
 
 @Composable
-fun ScribbleCanvas(color: Color, modifier: Modifier = Modifier) {
+fun ScribbleCanvas(color: Color, lineWidth: Dp, modifier: Modifier = Modifier) {
 	var points by remember { mutableStateOf<List<Offset>>(emptyList()) }
 
 	Canvas(
@@ -75,9 +76,11 @@ fun ScribbleCanvas(color: Color, modifier: Modifier = Modifier) {
 			.background(Color.Gray)
 			.pointerInput(remember { MutableInteractionSource() }) {
 				detectDragGestures(
-					onDragStart = { points = listOf(it) },
-					onDrag = { _, dragAmount ->
-						val newPoint = points.last() + dragAmount
+					onDragStart = {
+						points = listOf(it)
+					},
+					onDrag = { change, _ ->
+						val newPoint = change.position
 						points = points + newPoint
 					}
 				)
@@ -94,7 +97,7 @@ fun ScribbleCanvas(color: Color, modifier: Modifier = Modifier) {
 				}
 			}
 
-			drawPath(path, color, style = Stroke())
+			drawPath(path, color, style = Stroke(width = lineWidth.toPx()))
 		}
 	}
 }
