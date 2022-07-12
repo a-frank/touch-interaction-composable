@@ -6,4 +6,4 @@ For a detailed explanation on the code and the available options visit this [pos
 [Go directly to the code](app/src/main/java/de/gnarly/touch/MainActivity.kt)
 
 ## Screenshot of the app
-![image](https://user-images.githubusercontent.com/2872794/178451307-04f4336c-8a2f-4c25-a309-b368c19f146f.png)
+![Screenshot](https://user-images.githubusercontent.com/2872794/178452193-5b3e6cee-9fa2-4d2c-8054-7ef9514f4d4a.png)
