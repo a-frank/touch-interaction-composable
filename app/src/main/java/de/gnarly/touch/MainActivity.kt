@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
@@ -32,6 +33,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+@ExperimentalComposeUiApi
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class MainActivity : ComponentActivity() {
 	}
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun ScribbleCanvas(color: Color, lineWidth: Dp, modifier: Modifier = Modifier) {
 	var points by remember { mutableStateOf<List<Offset>>(emptyList()) }
@@ -80,8 +83,11 @@ fun ScribbleCanvas(color: Color, lineWidth: Dp, modifier: Modifier = Modifier) {
 						points = listOf(it)
 					},
 					onDrag = { change, _ ->
-						val newPoint = change.position
-						points = points + newPoint
+						val pointsFromHistory = change.historical
+							.map { it.position }
+							.toTypedArray()
+						val newPoints = listOf(*pointsFromHistory, change.position)
+						points = points + newPoints
 					}
 				)
 			}
