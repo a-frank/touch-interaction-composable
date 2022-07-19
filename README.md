@@ -1,3 +1,5 @@
+![badge](https://user-images.githubusercontent.com/2872794/179725949-12d3cf43-34f0-4743-884e-b1cf69525dd9.svg)
+
 # Touch interaction example
 
 This small app demonstrats how to handle touch interactions on a canvas and perform a simple drawing.
